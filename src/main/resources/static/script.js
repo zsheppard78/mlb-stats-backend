@@ -100,7 +100,7 @@ document.addEventListener("DOMContentLoaded", () => {
 // =========================
 async function loadTeams() {
     console.log("Loading standings...");
-    const res = await fetch("/api/teams");
+    const res = await fetch("https://your-backend-name.onrender.com/api/teams");
     const data = await res.json();
     const teams = data.teams;
 
