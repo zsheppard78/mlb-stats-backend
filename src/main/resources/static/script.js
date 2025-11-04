@@ -309,7 +309,7 @@ async function openRosterModal(team) {
         people.forEach(p => {
             div.innerHTML += `
                 <div class="player-row" data-id="${p.id}">
-                    <img src="${p.headshot}" class="player-headshot" />
+                    <img src="${p.headshot}" class="player-headshot" alt="${p.fullName} headshot" />
                     <div class="player-info">
                         <strong>${p.name}</strong> (${p.position})<br>
                         AVG: ${p.stats.avg || "—"} | 
