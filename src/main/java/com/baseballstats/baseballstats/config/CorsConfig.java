@@ -1,4 +1,4 @@
-package com.baseballstats.baseballstats;
+package com.baseballstats.baseballstats.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -14,7 +14,7 @@ public class CorsConfig {
             public void addCorsMappings(CorsRegistry registry) {
                 registry
                         .addMapping("/api/**")
-                        .allowedOrigins("https://mlb-stats-frontend.onrender.com")  // <-- your frontend URL
+                        .allowedOrigins("https://mlb-stats-frontend.onrender.com")
                         .allowedMethods("GET", "POST", "OPTIONS")
                         .allowedHeaders("*");
             }
