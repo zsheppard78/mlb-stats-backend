@@ -133,7 +133,7 @@ async function loadTeams() {
         const isFav = favorites.includes(team.id);
 
         teamCard.innerHTML = `
-            <img src="${logoUrl}" class="team-logo">
+            <img src="${logoUrl}" class="team-logo" alt="${team.name} logo">
             <p class="team-name">${team.name}</p>
             <div class="favorite-container">
                 <span class="favorite-star ${isFav ? "active" : ""}" 
