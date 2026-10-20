@@ -60,6 +60,11 @@
             <artifactId>postgresql</artifactId>
             <scope>runtime</scope>
         </dependency>
+        <!-- Password hashing (bcrypt) for username accounts -->
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-crypto</artifactId>
+        </dependency>
         <!-- Creates and updates the database tables from src/main/resources/db/migration -->
         <dependency>
             <groupId>org.flywaydb</groupId>
