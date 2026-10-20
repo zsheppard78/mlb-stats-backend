@@ -15,7 +15,7 @@ public class CorsConfig {
                 registry
                         .addMapping("/api/**")
                         .allowedOrigins("https://mlb-stats-frontend.onrender.com")
-                        .allowedMethods("GET", "POST", "OPTIONS")
+                        .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
                         .allowedHeaders("*");
             }
         };
