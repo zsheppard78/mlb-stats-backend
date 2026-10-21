@@ -19,7 +19,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 /** Signs up, signs in and edits favorites against an in-memory database. */
-@SpringBootTest
+@SpringBootTest(properties = "DATABASE_URL=") // always the in-memory database, never Neon
 @AutoConfigureMockMvc
 class AccountFlowTest {
 

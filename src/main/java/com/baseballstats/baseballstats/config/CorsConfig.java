@@ -15,10 +15,7 @@ public class CorsConfig {
             public void addCorsMappings(CorsRegistry registry) {
                 registry
                         .addMapping("/api/**")
-                        .allowedOrigins(
-                                "https://statdugout.com",
-                                "https://www.statdugout.com",
-                                "https://mlb-stats-frontend.onrender.com")
+                        .allowedOrigins("https://mlb-stats-frontend.onrender.com")
                         .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
                         .allowedHeaders("*");
             }

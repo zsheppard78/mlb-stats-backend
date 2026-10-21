@@ -1,0 +1,9 @@
+# Keep the Docker build context small: only what the build needs
+target/
+.git/
+.github/
+.idea/
+*.iml
+.vscode/
+HELP.md
+README.md

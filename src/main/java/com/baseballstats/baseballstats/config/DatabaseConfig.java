@@ -2,9 +2,12 @@ package com.baseballstats.baseballstats.config;
 
 import com.zaxxer.hikari.HikariDataSource;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Condition;
+import org.springframework.context.annotation.ConditionContext;
+import org.springframework.context.annotation.Conditional;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.type.AnnotatedTypeMetadata;
 
 import javax.sql.DataSource;
 
@@ -21,8 +24,17 @@ import javax.sql.DataSource;
 @Configuration
 public class DatabaseConfig {
 
+    /** True when DATABASE_URL is set to something (tests set it to empty to stay on H2). */
+    static class HasDatabaseUrl implements Condition {
+        @Override
+        public boolean matches(ConditionContext context, AnnotatedTypeMetadata metadata) {
+            String url = context.getEnvironment().getProperty("DATABASE_URL");
+            return url != null && !url.isBlank();
+        }
+    }
+
     @Bean
-    @ConditionalOnProperty(name = "DATABASE_URL")
+    @Conditional(HasDatabaseUrl.class)
     public DataSource dataSource(@Value("${DATABASE_URL}") String databaseUrl) {
         PostgresUrl url = PostgresUrl.parse(databaseUrl);
 

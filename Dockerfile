@@ -1,20 +1,29 @@
-# Use Eclipse Temurin JDK 17 as the base image
-FROM eclipse-temurin:17-jdk
+# Two stages: build with the full JDK + Maven, then run on a small Java runtime image.
 
-# Set working directory in the container
+# ---- Build ----
+FROM eclipse-temurin:17-jdk AS build
 WORKDIR /app
 
-# Copy Maven wrapper and project files
-COPY . .
+# Download dependencies first, so Docker can reuse this layer when only the code changes
+COPY mvnw pom.xml ./
+COPY .mvn .mvn
+RUN chmod +x mvnw && ./mvnw -q -B dependency:go-offline
 
-# Make the Maven wrapper executable (important!)
-RUN chmod +x ./mvnw
+COPY src src
+# Tests run in GitHub Actions on every push (see .github/workflows/ci.yml)
+RUN ./mvnw -q -B package -DskipTests
 
-# Build the application without running tests
-RUN ./mvnw clean package -DskipTests
+# ---- Run ----
+FROM eclipse-temurin:17-jre
+WORKDIR /app
 
-# Expose port 8080 (Spring Boot default)
+# Don't run as root
+RUN useradd --system --uid 1001 app
+USER app
+
+COPY --from=build /app/target/statdugout-api.jar app.jar
+
+# Render's free plan has 512 MB of memory; let the JVM size its heap to fit
+ENV JAVA_TOOL_OPTIONS="-XX:MaxRAMPercentage=75 -XX:+UseSerialGC -XX:TieredStopAtLevel=1"
 EXPOSE 8080
-
-# Run the built JAR
-CMD ["java", "-jar", "target/baseball-stats-0.0.1-SNAPSHOT.jar"]
+CMD ["java", "-jar", "app.jar"]
