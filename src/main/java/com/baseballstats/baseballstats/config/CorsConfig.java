@@ -5,6 +5,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
+/** Which websites may call the /api endpoints from a browser: the site's own addresses. */
 @Configuration
 public class CorsConfig {
     @Bean
@@ -14,7 +15,10 @@ public class CorsConfig {
             public void addCorsMappings(CorsRegistry registry) {
                 registry
                         .addMapping("/api/**")
-                        .allowedOrigins("https://mlb-stats-frontend.onrender.com")
+                        .allowedOrigins(
+                                "https://statdugout.com",
+                                "https://www.statdugout.com",
+                                "https://mlb-stats-frontend.onrender.com")
                         .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
                         .allowedHeaders("*");
             }

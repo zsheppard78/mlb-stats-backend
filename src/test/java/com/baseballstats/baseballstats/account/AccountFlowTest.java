@@ -82,6 +82,11 @@ class AccountFlowTest {
     }
 
     @Test
+    void pingAnswersWithoutSignIn() throws Exception {
+        mvc.perform(get("/api/ping")).andExpect(status().isOk()).andExpect(jsonPath("$.status").value("ok"));
+    }
+
+    @Test
     void favoritesNeedASignIn() throws Exception {
         mvc.perform(get("/api/favorites")).andExpect(status().isUnauthorized());
         mvc.perform(get("/api/favorites").header("Authorization", "Bearer made-up-token"))
